@@ -1,34 +1,15 @@
 import { Link } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
+import { useEffect, useState } from "react";
 
-const featured = [
-  {
-    id: 1,
-    name: "Wireless Headphones",
-    category: "Electronics",
-    description: "High-quality sound with 20-hour battery life.",
-    price: 45.0,
-    image: "/images/product1.jpg",
-  },
-  {
-    id: 2,
-    name: "Cotton Summer Dress",
-    category: "Clothing",
-    description: "Lightweight and breathable fabric, perfect for warm climates.",
-    price: 28.0,
-    image: "/images/product2.jpg",
-  },
-  {
-    id: 3,
-    name: "Ethiopian Organic Coffee",
-    category: "Food & Beverage",
-    description: "Premium single-origin coffee from the highlands of Ethiopia.",
-    price: 12.0,
-    image: "/images/product3.jpg",
-  },
-];
 
 export default function Home({ addToCart }) {
+  const [featured, setFeatured] = useState([]);
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL}/products`)
+      .then((r) => r.json())
+      .then((data) => setFeatured(data.slice(0, 3)));
+  }, []);
   return (
     <div>
       {/* Hero */}
