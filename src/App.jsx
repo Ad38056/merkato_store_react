@@ -11,10 +11,25 @@ export default function App() {
   const [cartCount, setCartCount] = useState(0);
   const [toast, setToast] = useState(null); // { message: string }
 
-  function addToCart(productName) {
-    setCartCount((prev) => prev + 1);
-    setToast({ message: `${productName} added to cart!` });
-    setTimeout(() => setToast(null), 3000);
+  async function addToCart(productId, productName) {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      window.location.href = "/login";
+      return;
+    }
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/cart`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ productId }),
+    });
+    if (res.ok) {
+      setCartCount((prev) => prev + 1);
+      setToast({ message: `${productName} added to cart!` });
+      setTimeout(() => setToast(null), 3000);
+    }
   }
 
   return (

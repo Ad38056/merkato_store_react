@@ -15,7 +15,7 @@ export default function ProductCard({ product, addToCart, actionLabel = "View Pr
         <p className="text-[#e8b84b] font-bold text-xl mb-3">${product.price.toFixed(2)}</p>
         {addToCart ? (
           <button
-            onClick={() => addToCart(product.name)}
+            onClick={() => addToCart(product.id, product.name)}
             className="bg-[#1f3864] hover:bg-[#e8b84b] hover:text-[#1f3864] text-white font-semibold text-sm px-4 py-2 rounded transition-colors"
           >
             Add to Cart
